@@ -24,22 +24,22 @@ The user must have the following for a successful minimal install:
 ## Guide For installing Traffic Ops
 
 1. Install PostgreSQL Database. For a production install it is best to install PostgreSQL on its own server/virtual machine.
-   1. yum update -y
-   2. yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
-   3. yum install -y postgresql13-server
-   4. su - postgres -c '/usr/pgsql-13/bin/initdb -A md5 -W' #-W forces the user to provide a superuser (postgres) password
+   ``` yum update -y
+   yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+   yum install -y postgresql13-server
+   su - postgres -c '/usr/pgsql-13/bin/initdb -A md5 -W' #-W forces the user to provide a superuser (postgres) password ```
 2. Edit /var/lib/pgsql/13/data/pg_hba.conf to allow the Traffic Ops instance to access the PostgreSQL server. For example, if the IP address of the machine to be used as the Traffic Ops host is 192.0.2.1 add the line host  all   all     192.0.2.1/32 md5 to the appropriate section of this file.
 3. Edit the /var/lib/pgsql/13/data/postgresql.conf file to add the appropriate listen_addresses or listen_addresses = '*', set timezone = 'UTC', and start the database
-   1. systemctl enable postgresql-13
-   2. systemctl start postgresql-13
-   3. systemctl status postgresql-13
+    ``` systemctl enable postgresql-13
+    systemctl start postgresql-13
+    systemctl status postgresql-13 ```
 4. Build a traffic_ops-version string.rpm file using the instructions under the Building Traffic Control page - or download a pre-built release from the Apache Continuous Integration server.
 5. Install a PostgreSQL client on the Traffic Ops host
-   1. yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm
+  ``` yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm ```
 6. Install the Traffic Ops RPM. The Traffic Ops RPM file should have been built in an earlier step.
-   1. yum install -y ./dist/traffic_ops-3.0.0-xxxx.yyyyyyy.el7.x86_64.rpm
+    ``` yum install -y ./dist/traffic_ops-3.0.0-xxxx.yyyyyyy.el7.x86_64.rpm ```
 7. Login to the Database from the Traffic Ops machine. At this point you should be able to login from the Traffic Ops (hostname to in the example) host to the PostgreSQL (hostname pg in the example) host
-   1.  psql -h pg -U postgres
+   ```  psql -h pg -U postgres ```
 8. Create the user and database. By default, Traffic Ops will expect to connect as the traffic_ops user to the traffic_ops database.
    ```to-# psql -U postgres -h pg -c "CREATE USER traffic_ops WITH ENCRYPTED PASSWORD 'tcr0cks';"
         Password for user postgres:
@@ -48,7 +48,68 @@ The user must have the following for a successful minimal install:
         Password:
         to-#
     ```
-9. Now, run the following command as the root user (or with sudo(8)): /opt/traffic_ops/install/bin/postinstall. Some additional files will be installed, and then it will proceed with the next phase of the install, where it will ask you about the local environment for your CDN. Please make sure you remember all your answers and verify that the database answers match the information previously used to create the database.
-    1.  /opt/traffic_ops/install/bin/postinstall
+9.  Now, run the following command as the root user (or with sudo(8)): /opt/traffic_ops/install/bin/postinstall. Some additional files will be installed, and then it will proceed with the next phase of the install, where it will ask you about the local environment for your CDN. Please make sure you remember all your answers and verify that the database answers match the information previously used to create the database.
+ ```to-# /opt/traffic_ops/install/bin/postinstall
+...
+
+===========/opt/traffic_ops/app/conf/production/database.conf===========
+Database type [Pg]:
+Database type: Pg
+Database name [traffic_ops]:
+Database name: traffic_ops
+Database server hostname IP or FQDN [localhost]: pg
+Database server hostname IP or FQDN: pg
+Database port number [5432]:
+Database port number: 5432
+Traffic Ops database user [traffic_ops]:
+Traffic Ops database user: traffic_ops
+Password for Traffic Ops database user:
+Re-Enter Password for Traffic Ops database user:
+Writing json to /opt/traffic_ops/app/conf/production/database.conf
+Database configuration has been saved
+===========/opt/traffic_ops/app/db/dbconf.yml===========
+Database server root (admin) user [postgres]:
+Database server root (admin) user: postgres
+Password for database server admin:
+Re-Enter Password for database server admin:
+===========/opt/traffic_ops/app/conf/cdn.conf===========
+Generate a new secret? [yes]:
+Generate a new secret?: yes
+Number of secrets to keep? [10]:
+Number of secrets to keep?: 10
+Not setting up ldap
+===========/opt/traffic_ops/install/data/json/users.json===========
+Administration username for Traffic Ops [admin]:
+Administration username for Traffic Ops: admin
+Password for the admin user:
+Re-Enter Password for the admin user:
+Writing json to /opt/traffic_ops/install/data/json/users.json
+===========/opt/traffic_ops/install/data/json/openssl_configuration.json===========
+Do you want to generate a certificate? [yes]:
+Country Name (2 letter code): US
+State or Province Name (full name): CO
+Locality Name (eg, city): Denver
+Organization Name (eg, company): Super CDN, Inc
+Organizational Unit Name (eg, section):
+Common Name (eg, your name or your server's hostname):
+RSA Passphrase:
+Re-Enter RSA Passphrase:
+===========/opt/traffic_ops/install/data/json/profiles.json===========
+Traffic Ops url [https://localhost]:
+Traffic Ops url: https://localhost
+Human-readable CDN Name.  (No whitespace, please) [kabletown_cdn]: blue_cdn
+Human-readable CDN Name.  (No whitespace, please): blue_cdn
+DNS sub-domain for which your CDN is authoritative [cdn1.kabletown.net]: blue-cdn.supercdn.net
+DNS sub-domain for which your CDN is authoritative: blue-cdn.supercdn.net
+Writing json to /opt/traffic_ops/install/data/json/profiles.json
+
+... much SQL output skipped
+
+Starting Traffic Ops
+Restarting traffic_ops (via systemctl):                    [  OK  ]
+Waiting for Traffic Ops to restart
+Success! Postinstall complete.
+
+```
 
 
