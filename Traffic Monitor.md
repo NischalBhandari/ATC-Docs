@@ -80,11 +80,11 @@ https://traffic-control-cdn.readthedocs.io/en/latest/admin/traffic_monitor.html#
 
 **Create a Traffic Monitor Profile in Traffic Portal**
 
-Name : RASCAL_Traffic-Monitor
-CDN : NAME_OF_CDN
-TYPE: TM_PROFILE
-ROUTING DISABLED : false
-DESCRIPTION: Description of the profile
+    1. Name : RASCAL_Traffic-Monitor
+    2. CDN : NAME_OF_CDN
+    3. TYPE: TM_PROFILE
+    4. ROUTING DISABLED : false
+    5. DESCRIPTION: Description of the profile
 
 
 **Parameters for Traffic Monitor**
@@ -92,28 +92,28 @@ DESCRIPTION: Description of the profile
 
 1. This parameter is created so that the traffic monitor knows which type of monitoring plugin is to used to monitor Apache Traffic Servers
 
-    Name: health.polling.format
-    Config File: rascal.properties
-    Value: stats_over_http
-    secure: false
+    1. Name: health.polling.format
+    2. Config File: rascal.properties
+    3. Value: stats_over_http
+    4. secure: false
 
 2. This parameter is created so that the traffic monitor knows what url to expect for monitoring from Apache Traffic servers.
-    Name: health.polling.url
-    Config File: rascal.properties
-    Value: http://${hostname}/_stats
-    Secure: false
+    1. Name: health.polling.url
+    2. Config File: rascal.properties
+    3. Value: http://${hostname}/_stats
+    4. Secure: false
 
 3. This parameter is created so that traffic monitor knows interval in which to poll its peers
-    Name: peers.polling.interval
-    Config File: rascal-config.txt
-    Value: 10000
-    Secure: false
+    1. Name: peers.polling.interval
+    2. Config File: rascal-config.txt
+    3. Value: 10000
+    4. Secure: false
 
 4. This parameter is created so that traffic monitor knows interval in which to poll ATS's
-    Name: health.polling.interval
-    Config File: rascal-config.txt
-    Value: 10000
-    Secure: false
+    1. Name: health.polling.interval
+    2. Config File: rascal-config.txt
+    3. Value: 10000
+    4. Secure: false
 
 
 #### Note for adding servers in Traffic Portal ! important Points
