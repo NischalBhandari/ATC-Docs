@@ -1,5 +1,6 @@
-# ATC-Docs
 # Traffic OPS
 Traffic Ops is the tool for administration (configuration and monitoring) of all components in a Traffic Control CDN. Traffic Portal uses the Traffic Ops API to manage servers, Cache Groups, Delivery Services, etc. In many cases, a configuration change requires propagation to several, or even all, cache servers and only explicitly after or before the same change propagates to Traffic Router. Traffic Ops takes care of this required consistency between the different components and their configuration.
 
 Traffic Ops uses a PostgreSQL database to store the configuration information, and a combination of the Mojolicious framework and Go to provide the Traffic Ops API. Not all configuration data is in this database however; for sensitive data like private SSL keys or token-based authentication shared secrets, **Traffic Vault** is used as a separate, key/value store, allowing administrators to harden the Traffic Vault server better from a security perspective (i.e only allow Traffic Ops to access it, verifying authenticity with a certificate). The Traffic Ops server, by design, needs to be accessible from all the other servers in the Traffic Control CDN.
+
+**Traffic Ops generates all the application-specific configuration files for the cache servers and other servers**. The cache servers and other servers check in with Traffic Ops at a regular interval to see if updated configuration files require application. On cache servers this is done by the ORT script.
