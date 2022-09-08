@@ -33,6 +33,9 @@ The user must have the following for a successful minimal install:
 
 3. Edit the /var/lib/pgsql/13/data/postgresql.conf file to add the appropriate listen_addresses or listen_addresses = '*', set timezone = 'UTC', and start the database
     ``` 
+        sudo yum install epel-release
+        yum install perl-Crypt-ScryptKDF
+
         systemctl enable postgresql-13
         systemctl start postgresql-13
         systemctl status postgresql-13 
@@ -42,6 +45,7 @@ The user must have the following for a successful minimal install:
 
 5. Install a PostgreSQL client on the Traffic Ops host. You also will need python3
     ```
+ 
    yum install  -y python3
 
    yum install -y https://download.postgresql.org/pub/repos/yum/reporpms/EL-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm ```
@@ -122,6 +126,8 @@ The user must have the following for a successful minimal install:
     Success! Postinstall complete.
 
 ```
+For More Information please visit 
+https://traffic-control-cdn.readthedocs.io/en/latest/admin/traffic_ops.html
 
 
 
