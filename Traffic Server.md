@@ -138,15 +138,6 @@ $ sudo yum install llvm5.0 llvm5.0-libs
 To use Git, you must install the appropriate packages:
 ```$ sudo yum install git```
 
-##### autoreconf
-The first time you build trafficserver, you must run autoreconf to create the ./configure script:
-```$ autoreconf -i```
-
-##### configure and build
-For more details, see the Building page.
-```
-$ ./configure && make
-```
 
 
 Clone from repository 
@@ -162,6 +153,8 @@ Change the directory to the cloned directory
 cd trafficserver/
 ```
 
+
+**Create a group in linux for traffic server**
 First create a group called tserver
 ```
 Sudo groupadd -g 175 tserver
@@ -172,13 +165,14 @@ sudo useradd -g 175 -u 176 -d /var/empty -s /sbin/nologin tserver
 
 ```
 
+##### Autoreconf
 If you have cloned the repository from Git, you will need to generate the configure script before proceeding:
 
 ```
 autoreconf -if
 ```
 
-Install Luajit
+**Install Luajit**
 
 Clone luajit
 ```
@@ -195,6 +189,7 @@ Sudo make install
 
 **Then the header files are present in /usr/loca/include/ **
 
+#### Important Configure SCRIPT
 
 Traffic Server uses the standard configure script method of configuring the source tree for building. A full list of available options may always be obtained by running the following in the base directory of your unpackaged archive or Git working copy:
 
@@ -218,6 +213,7 @@ Sudo ln -s /opt/ats/lib/libtscpputil.so /usr/lib64
 ```
 
 
+**Make  and Make Check**
 Once the source tree has been configured, you may proceed on to building with the generated Makefiles. The make check command may be used to perform sanity checks on the resulting build, prior to installation, and it is recommended that you use this
 
 ```
@@ -226,7 +222,7 @@ make check
 
 ```
 
-
+**Installing the build source**
 With the source built and checked, you may now install all of the binaries, header files, documentation, and other artifacts to their final locations on your system.
 
 ```
@@ -237,6 +233,8 @@ sudo make install
 
 
 ##### Note Extra:
+
+For make test to pass you must also install python3
 
 How to install with openssl 1.1.1
 
