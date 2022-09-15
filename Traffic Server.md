@@ -231,6 +231,15 @@ sudo make install
 ```
 
 
+### Starting Traffic server
+/opt/trafficserver/bin/trafficserver start
+
+### Restarting Traffic Servier
+/opt/trafficserver/bin/trafficserver restart
+
+### Stopping Traffic Server
+/opt/trafficserver/bin/trafficserver stop
+
 
 ##### Note Extra:
 
