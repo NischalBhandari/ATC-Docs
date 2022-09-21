@@ -69,7 +69,7 @@ Setup Process
 1. If no suitable Profile exists, create a new Profile for Traffic Router via the + button on the Profiles page in Traffic Portal
 2. Enter the Traffic Router server into Traffic Portal on the Servers page (or via the Traffic Ops API), assign to it a Traffic Router Profile, and ensure that its status is set to ONLINE.
 3. Enter the Traffic Router server into Traffic Portal on the Servers page (or via the Traffic Ops API), assign to it a Traffic Router Profile, and ensure that its status is set to ONLINE.
-4. Extract the tomcat RPM
+4. Extract the tomcat RPM (sudo yum install tomcat)
 5. Extract the Traffic Router RPM
 6. Edit the traffic_monitor.properties and specify the correct online Traffic Monitor(s) for your CDN.
    ``` https://traffic-control-cdn.readthedocs.io/en/latest/admin/traffic_router.html#tr-config-files
