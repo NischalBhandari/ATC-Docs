@@ -69,9 +69,13 @@ Setup Process
 1. If no suitable Profile exists, create a new Profile for Traffic Router via the + button on the Profiles page in Traffic Portal
 2. Enter the Traffic Router server into Traffic Portal on the Servers page (or via the Traffic Ops API), assign to it a Traffic Router Profile, and ensure that its status is set to ONLINE.
 3. Enter the Traffic Router server into Traffic Portal on the Servers page (or via the Traffic Ops API), assign to it a Traffic Router Profile, and ensure that its status is set to ONLINE.
-4. Extract the tomcat RPM (sudo yum install tomcat)
+4. Extract the tomcat RPM from the **Building Packages.md **
 5. Extract the Traffic Router RPM
-6. Edit the traffic_monitor.properties and specify the correct online Traffic Monitor(s) for your CDN.
+6. Traffic Router as of now also requires tomcat-native > 1.2.23 so enter the following
+   1. wget https://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/t/tomcat-native-1.2.35-1.el7.x86_64.rpm
+    1. sudo yum install tomcat-native-*..
+    2. Then you can install Traffic Router
+7. Edit the traffic_monitor.properties and specify the correct online Traffic Monitor(s) for your CDN.
    ``` https://traffic-control-cdn.readthedocs.io/en/latest/admin/traffic_router.html#tr-config-files
    
    traffic_monitor.properties
@@ -81,7 +85,7 @@ Setup Process
         Period to wait (in milliseconds) between reloading this file, e.g. traffic_monitor.properties.reload.period=60000
    
     ```
-7. Start Traffic Router. This is normally done by starting its systemd(1) service. systemctl start traffic_router , and test DNS lookups against that server to be sure it’s resolving properly. with e.g. dig or curl. Also, because previously taken CDN Snapshots will be cached, they need to be removed manually to actually be reloaded. This file should be located at /opt/traffic_router/db/cr-config.json. This should be done before starting or restarting Traffic Router.
+8. Start Traffic Router. This is normally done by starting its systemd(1) service. systemctl start traffic_router , and test DNS lookups against that server to be sure it’s resolving properly. with e.g. dig or curl. Also, because previously taken CDN Snapshots will be cached, they need to be removed manually to actually be reloaded. This file should be located at /opt/traffic_router/db/cr-config.json. This should be done before starting or restarting Traffic Router.
     ``` 
         systemctl start traffic_router
         dig @localhost mycdn.ciab.test
@@ -107,9 +111,9 @@ Setup Process
 
     ```
 
-8. Perform a CDN Snapshot.
+9.  Perform a CDN Snapshot.
 
-9. Ensure that the parent domain (e.g.: cdn.local) for the CDN’s top level domain (e.g.: ciab.cdn.local) contains a delegation (Name Server records) for the new Traffic Router, and that the value specified matches the FQDN of the Traffic Router.
+10. Ensure that the parent domain (e.g.: cdn.local) for the CDN’s top level domain (e.g.: ciab.cdn.local) contains a delegation (Name Server records) for the new Traffic Router, and that the value specified matches the FQDN of the Traffic Router.
 
 ### Configuring Traffic Router
 
