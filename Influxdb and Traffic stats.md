@@ -69,6 +69,9 @@ The traffic_stats.cfg file contains the default retention policy for the influxd
 Now to change the retention policy of the influxdb databases change the duration of the monthly retention policy from 1 month to 3 month.
 
 
+Note : For seeing the space used by influxdb database
+
+du -sh /var/lib/influxdb/data/<db name>
 
 
 Now after see the grafana.md
