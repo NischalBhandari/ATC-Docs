@@ -194,7 +194,7 @@ Sudo make install
 Traffic Server uses the standard configure script method of configuring the source tree for building. A full list of available options may always be obtained by running the following in the base directory of your unpackaged archive or Git working copy:
 
 ```
-./configure --prefix=/opt/ats --with-user=tserver --enable-experimental-plugins –with-luajit=/usr/local
+./configure --prefix=/opt/trafficserver --with-user=tserver --enable-experimental-plugins –with-luajit=/usr/local
 
 ```
 
