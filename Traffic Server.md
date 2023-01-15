@@ -241,6 +241,70 @@ sudo make install
 /opt/trafficserver/bin/trafficserver stop
 
 
+Now to sync the traffic server with the ATC we need two things 
+
+### Installing astats plugin 
+To install astas plugin we need to install Apache traffic control from github repo 
+
+git clone https://github.com/....
+
+then we can use the following command by going into the bin folder of the installed traffic server
+
+if the traffic server is installed in /opt/trafficserver 
+then the tsxs is located in /opt/trafficserver/bin/trafficserver/
+
+```
+tsxs -c /path/to/astats_over_http.c -o astats_over_http.so 
+sudo tsxs -o astats_over_http.so -i
+
+```
+
+This enables astats plugin which will enable traffic monitor to get stats of each delivery services from traffic server.
+
+
+### Installing T3C 
+To install t3c build the correct version from Building Packages 
+There you can find the traffic cache control rpm which can be installed
+
+after installing t3c you need to first run 
+```
+sudo  t3c-apply --traffic-ops-url=https://trafficops.domain.com --traffic-ops-user=username --traffic-ops-password=password -I --trafficserver-home=/opt/trafficserver --cache-host-name=hostname_installed_in_traffic_portal  -vv -2 --run-mode=badass  --git=yes
+
+sudo chmod 777 /opt/trafficserver/etc/trafficserver/ssl_multicert.config
+
+sudo chown -R tserver:tserver /opt/trafficserver/etc/traffficserver/ssl/
+sudo chmod -R 777 /opt/trafficserver/etc/trafficserver/ssl/
+sudo /opt/trafficserver/bin/trafficserver restart
+
+```
+
+
+then you can add a cronjob to run the following scipt each 15 mins
+
+```
+
+t3c-apply --traffic-ops-url=https://trafficops.domain.com --traffic-ops-user=username --traffic-ops-password=password -I --trafficserver-home=/opt/trafficserver --cache-host-name= hostname_installed_in_traffic_portal -vv -2 --run-mode=syncds  --git=yes
+chmod 777 /opt/trafficserver/etc/trafficserver/ssl_multicert.config
+chown -R tserver:tserver /opt/trafficserver/etc/trafficserver/ssl/
+chmod -R 777 /opt/trafficserver/etc/trafficserver/ssl/
+/opt/trafficserver/bin/traffic_ctl config reload
+
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##### Note Extra:
 
 For make test to pass you must also install python3
